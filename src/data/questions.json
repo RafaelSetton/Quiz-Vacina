@@ -1,0 +1,57 @@
+[
+    {
+        "pergunta": "Por que devemos tomar vacinas?",
+        "opcoes": [
+            "Para ficarmos mais fortes como super-heróis",
+            "Para proteger nosso corpo contra doenças",
+            "Porque é legal tomar injeção",
+            "Para crescer mais rápido"
+        ],
+        "respostaCorreta": 1,
+        "explicacao": "As vacinas ajudam nosso corpo a criar defesas contra doenças perigosas!"
+    },
+    {
+        "pergunta": "O que as vacinas contêm?",
+        "opcoes": [
+            "Doces e refrigerantes",
+            "Pequenos pedaços de germes enfraquecidos ou mortos",
+            "Vitaminas e minerais",
+            "Super poderes secretos"
+        ],
+        "respostaCorreta": 1,
+        "explicacao": "As vacinas contêm versões enfraquecidas ou pedacinhos de germes que ensinam nosso corpo a se defender!"
+    },
+    {
+        "pergunta": "Quem deve tomar vacinas?",
+        "opcoes": [
+            "Apenas pessoas doentes",
+            "Só adultos",
+            "Todas as pessoas, incluindo crianças",
+            "Apenas os animais de estimação"
+        ],
+        "respostaCorreta": 2,
+        "explicacao": "Todas as pessoas precisam se vacinar para ficarmos todos protegidos!"
+    },
+    {
+        "pergunta": "O que acontece quando muitas pessoas são vacinadas?",
+        "opcoes": [
+            "Todo mundo fica com febre",
+            "A doença não consegue se espalhar facilmente",
+            "Todos ficam com sono",
+            "As pessoas ficam com manchas coloridas"
+        ],
+        "respostaCorreta": 1,
+        "explicacao": "Quando muitas pessoas são vacinadas, criamos a \"proteção coletiva\" e a doença não consegue se espalhar!"
+    },
+    {
+        "pergunta": "O que levar na hora de se vacinar?",
+        "opcoes": [
+            "Carteirinha de vacinação",
+            "Brinquedo favorito",
+            "Um sorvete",
+            "Uma máscara de super-herói"
+        ],
+        "respostaCorreta": 0,
+        "explicacao": "A carteirinha de vacinação é muito importante para registrar todas as vacinas que já tomamos!"
+    }
+]
