@@ -1,57 +1,102 @@
 [
     {
-        "pergunta": "Por que devemos tomar vacinas?",
+        "pergunta": "Qual dessas doenças foi erradicada no mundo graças à vacinação?",
         "opcoes": [
-            "Para ficarmos mais fortes como super-heróis",
-            "Para proteger nosso corpo contra doenças",
-            "Porque é legal tomar injeção",
-            "Para crescer mais rápido"
+            "Poliomielite",
+            "Sarampo",
+            "Varíola",
+            "Gripe"
         ],
-        "respostaCorreta": 1,
-        "explicacao": "As vacinas ajudam nosso corpo a criar defesas contra doenças perigosas!"
+        "respostaCorreta": 2
     },
     {
-        "pergunta": "O que as vacinas contêm?",
+        "pergunta": "Em que idade um bebê deve começar a receber vacinas?",
         "opcoes": [
-            "Doces e refrigerantes",
-            "Pequenos pedaços de germes enfraquecidos ou mortos",
-            "Vitaminas e minerais",
-            "Super poderes secretos"
+            "Ao nascer",
+            "Somente aos 6 meses",
+            "Após 1 ano de vida",
+            "A partir dos 2 anos"
         ],
-        "respostaCorreta": 1,
-        "explicacao": "As vacinas contêm versões enfraquecidas ou pedacinhos de germes que ensinam nosso corpo a se defender!"
+        "respostaCorreta": 0
     },
     {
-        "pergunta": "Quem deve tomar vacinas?",
+        "pergunta": "Por que vacinar contra a COVID-19?",
         "opcoes": [
-            "Apenas pessoas doentes",
-            "Só adultos",
-            "Todas as pessoas, incluindo crianças",
-            "Apenas os animais de estimação"
+            "Para curar resfriados no momento",
+            "Para se proteger contra a gripe",
+            "Não faz diferença para crianças",
+            "Para reduzir o risco de ficar gravemente doente"
         ],
-        "respostaCorreta": 2,
-        "explicacao": "Todas as pessoas precisam se vacinar para ficarmos todos protegidos!"
+        "respostaCorreta": 3
     },
     {
-        "pergunta": "O que acontece quando muitas pessoas são vacinadas?",
+        "pergunta": "Por que é importante completar as doses de reforço das vacinas?",
         "opcoes": [
-            "Todo mundo fica com febre",
-            "A doença não consegue se espalhar facilmente",
-            "Todos ficam com sono",
-            "As pessoas ficam com manchas coloridas"
+            "Apenas para encher o cartão",
+            "Não é necessário completar todas as doses",
+            "Para manter a proteção contra a doença",
+            "Para nunca mais ficar doente"
         ],
-        "respostaCorreta": 1,
-        "explicacao": "Quando muitas pessoas são vacinadas, criamos a \"proteção coletiva\" e a doença não consegue se espalhar!"
+        "respostaCorreta": 2
     },
     {
-        "pergunta": "O que levar na hora de se vacinar?",
+        "pergunta": "Qual médico britânico é considerado o principal pioneiro da vacinação?",
         "opcoes": [
-            "Carteirinha de vacinação",
-            "Brinquedo favorito",
-            "Um sorvete",
-            "Uma máscara de super-herói"
+            "Edward Jenner",
+            "Alexander Fleming",
+            "Joseph Lister",
+            "William Harvey"
         ],
-        "respostaCorreta": 0,
-        "explicacao": "A carteirinha de vacinação é muito importante para registrar todas as vacinas que já tomamos!"
+        "respostaCorreta": 0
+    },
+    {
+        "pergunta": "Como a vacinação e o transtorno do espectro autista (TEA) estão relacionados?",
+        "opcoes": [
+            "Vacinas podem causar o transtorno do espectro autista",
+            "Não há nenhuma relação direta conhecida",
+            "A vacinação é pouco eficaz em pessoas no espectro autista",
+            "Existem vacinas que previnem a ocorrência do TEA"
+        ],
+        "respostaCorreta": 1
+    },
+    {
+        "pergunta": "Para que serve o cartão (caderneta) de vacinação?",
+        "opcoes": [
+            "Anotar tarefas de casa",
+            "Guardar figurinhas",
+            "Contar piadas",
+            "Registrar todas as vacinas que a criança tomou"
+        ],
+        "respostaCorreta": 3
+    },
+    {
+        "pergunta": "Vacinar-se ajuda apenas a proteger quem toma a vacina?",
+        "opcoes": [
+            "Sim, só quem toma fica protegido",
+            "Não protege ninguém de verdade",
+            "Não, também ajuda a proteger outras pessoas da comunidade",
+            "Só protege por um dia"
+        ],
+        "respostaCorreta": 2
+    },
+    {
+        "pergunta": "Por que muitas pessoas tomam a vacina da gripe todo ano?",
+        "opcoes": [
+            "Só para não perder o costume",
+            "Porque o vírus da gripe muda todo ano e precisamos de nova proteção",
+            "Não existe vacina da gripe anual",
+            "Apenas porque gostam de ser perfuradas"
+        ],
+        "respostaCorreta": 1
+    },
+    {
+        "pergunta": "Como as vacinas ajudam o nosso corpo?",
+        "opcoes": [
+            "Ensinando o sistema imunológico a criar defesas contra germes",
+            "Fortalecendo os músculos",
+            "Proporcionando vitaminas",
+            "Fazendo o corpo crescer de tamanho"
+        ],
+        "respostaCorreta": 0
     }
 ]

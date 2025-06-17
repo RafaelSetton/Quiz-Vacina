@@ -1,7 +1,6 @@
 import './App.css';
 
 import perguntas from './data/questions.json'
-import scores from './data/scores.json'
 import mascote from './images/mascote.png'
 
 import { useState, useEffect } from 'react';
@@ -10,6 +9,8 @@ import { Trophy, Heart, Award, Star } from 'lucide-react';
 const images = require.context('./images/questions', true);
 const imageList = images.keys().map(image => images(image));
 
+const TEMPO_POR_QUESTAO = 30
+
 console.log(imageList)
 // Componente principal do Quiz
 export default function App() {
@@ -17,14 +18,12 @@ export default function App() {
   const [etapaAtual, setEtapaAtual] = useState('inicio');
   const [pontuacao, setPontuacao] = useState(0);
   const [perguntaAtual, setPerguntaAtual] = useState(0);
-  const [nomeJogador, setNomeJogador] = useState('');
   const [mensagemFeedback, setMensagemFeedback] = useState('');
   const [mostrarFeedback, setMostrarFeedback] = useState(false);
-  const [tempoRestante, setTempoRestante] = useState(15);
+  const [tempoRestante, setTempoRestante] = useState(TEMPO_POR_QUESTAO);
   const [cronometroAtivo, setCronometroAtivo] = useState(false);
   const [teclaAtiva, setTeclaAtiva] = useState('');
-  const [lideranca, setLideranca] = useState(scores);
-  const [imgIndex, setImgIndex] = useState(0);
+  const [lideranca, setLideranca] = useState([]);
 
   // Efeito para controlar o cronômetro
   useEffect(() => {
@@ -41,76 +40,42 @@ export default function App() {
     return () => clearInterval(intervalo);
   }, [cronometroAtivo, tempoRestante]);
 
-  // Manipulador de eventos de teclado
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (etapaAtual !== 'quiz' || mostrarFeedback) return;
-
-      const key = e.key.toUpperCase();
-
-      // Verificar se a tecla pressionada é A, B, C ou D
-      if (key === 'A' || key === 'B' || key === 'C' || key === 'D') {
-        // Converter a letra em índice (A=0, B=1, C=2, D=3)
-        const indice = key.charCodeAt(0) - 65;
-
-        // Verificar se o índice é válido para as opções disponíveis
-        if (indice >= 0 && indice < perguntas[perguntaAtual].opcoes.length) {
-          setTeclaAtiva(key);
-
-          // Um pequeno atraso para mostrar a tecla que foi pressionada antes de processar a resposta
-          setTimeout(() => {
-            handleResposta(indice);
-            setTeclaAtiva('');
-          }, 200);
+    const handleKeyDown = (event) => {
+      console.log("Pressed " + event.key + " at " + etapaAtual)
+      console.log(event)
+      if (event.type !== "keydown") return;
+      if (etapaAtual === "inicio") {
+        iniciarQuiz()
+      } else if (etapaAtual === "quiz" && !mostrarFeedback) {
+        const KEYS = "abcd";
+        const idx = KEYS.indexOf(event.key.toLowerCase());
+        if (idx >= 0) {
+          setTeclaAtiva(event.key.toUpperCase())
+          handleResposta(idx);
+          setTimeout(() => { setTeclaAtiva('') }, 2000)
         }
+      } else if (etapaAtual === "lideranca") {
+        if (event.type === "keydown") reiniciarQuiz()
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [etapaAtual, perguntaAtual, mostrarFeedback]);
-
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      console.log("Pressed " + event.key + " at " + etapaAtual)
-      if (etapaAtual === "inicio") {
-        console.log("X")
-        iniciarQuiz()
-      } else if (etapaAtual === "quiz") {
-        const KEYS = "abcd";
-        const idx = KEYS.indexOf(event.key.toLowerCase());
-        if (idx >= 0) {
-          handleResposta(idx);
-        }
-      } else if (etapaAtual === "liderança") { } else { }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [etapaAtual]);
+  }, [etapaAtual, perguntaAtual, mostrarFeedback]);
 
   // Iniciar o quiz
   const iniciarQuiz = () => {
     setEtapaAtual('quiz');
     setPontuacao(0);
     setPerguntaAtual(0);
-    setTempoRestante(15);
+    setTempoRestante(TEMPO_POR_QUESTAO);
     setCronometroAtivo(true);
   };
 
   // Salvar pontuação
   const salvarPontuacao = () => {
-    if (nomeJogador.trim() === '') {
-      alert('Por favor, digite seu nome!');
-      return;
-    }
-
-    const novaLideranca = [...lideranca, { nome: nomeJogador, pontos: pontuacao }]
-      .sort((a, b) => b.pontos - a.pontos)
-      .slice(0, 5);
+    const novaLideranca = [...lideranca, pontuacao].sort((a, b) => b - a).slice(0, 5);
 
     setLideranca(novaLideranca);
     setEtapaAtual('lideranca');
@@ -126,9 +91,9 @@ export default function App() {
       setMensagemFeedback("Tempo esgotado! Vamos para a próxima pergunta.");
     } else if (indiceResposta === pergunta.respostaCorreta) {
       setPontuacao(pontuacao + 20);
-      setMensagemFeedback(`Correto! ${pergunta.explicacao}`);
+      setMensagemFeedback(`Correto!`);
     } else {
-      setMensagemFeedback(`Ops! A resposta correta era: ${pergunta.opcoes[pergunta.respostaCorreta]}. ${pergunta.explicacao}`);
+      setMensagemFeedback(`Ops! A resposta correta era: ${pergunta.opcoes[pergunta.respostaCorreta]}.`);
     }
 
     setMostrarFeedback(true);
@@ -137,12 +102,12 @@ export default function App() {
       setMostrarFeedback(false);
 
       if (perguntaAtual < perguntas.length - 1) {
-        setImgIndex((imgIndex + 1) % imageList.length);
         setPerguntaAtual(perguntaAtual + 1);
-        setTempoRestante(15);
+        setTempoRestante(TEMPO_POR_QUESTAO);
         setCronometroAtivo(true);
       } else {
         setEtapaAtual('final');
+        setTimeout(salvarPontuacao, 3000)
       }
     }, 3000);
   };
@@ -152,7 +117,6 @@ export default function App() {
     setEtapaAtual('inicio');
     setPontuacao(0);
     setPerguntaAtual(0);
-    setNomeJogador('');
   };
 
   // Tela de início
@@ -193,13 +157,12 @@ export default function App() {
             onClick={ iniciarQuiz }
             className="w-full py-3 px-4 bg-blue-500 hover:bg-blue-600 text-white text-lg font-bold rounded-lg transition-colors shadow-md"
           >
-            COMEÇAR AVENTURA!
+            Aperte qualquer botão para começar!
           </button>
         </div>
       </div>
     );
   }
-
   // Tela do quiz
   if (etapaAtual === 'quiz') {
     const pergunta = perguntas[perguntaAtual];
@@ -220,19 +183,19 @@ export default function App() {
           <div className="mb-4 bg-blue-500 h-2 rounded-full">
             <div
               className="bg-yellow-400 h-2 rounded-full"
-              style={ { width: `${(tempoRestante / 15) * 100}%` } }
+              style={ { width: `${(tempoRestante / TEMPO_POR_QUESTAO) * 100}%` } }
             ></div>
           </div>
 
           <div className="bg-blue-100 p-4 rounded-lg mb-6">
             <h2 className="text-xl font-bold mb-2">{ pergunta.pergunta }</h2>
             <div className="flex justify-center">
-              <img src={ imageList[imgIndex] } alt="Ilustração da pergunta" className="h-32 rounded-lg my-2" />
+              <img src={ imageList[perguntaAtual] } alt="Ilustração da pergunta" className="h-32 rounded-lg my-2" />
             </div>
           </div>
 
           <div className="bg-yellow-100 p-3 rounded-lg mb-4 text-center">
-            <p>Para responder use o mouse ou digite as teclas <strong>A, B, C, D</strong> no teclado!</p>
+            <p>Para responder aperte o botão correspondente <strong>A, B, C, D</strong> no teclado!</p>
           </div>
 
           <div className="grid grid-cols-1 gap-3 mb-4">
@@ -292,24 +255,6 @@ export default function App() {
 
           <p className="text-xl font-bold mb-2">Você fez { pontuacao } pontos!</p>
           <p className="mb-6">Parabéns por aprender sobre a importância das vacinas!</p>
-
-          <div className="mb-4">
-            <label className="block text-left mb-2">Digite seu nome:</label>
-            <input
-              type="text"
-              value={ nomeJogador }
-              onChange={ (e) => setNomeJogador(e.target.value) }
-              className="w-full p-3 border border-gray-300 rounded-lg"
-              placeholder="Seu nome aqui"
-            />
-          </div>
-
-          <button
-            onClick={ salvarPontuacao }
-            className="w-full py-3 px-4 bg-blue-500 hover:bg-blue-600 text-white text-lg font-bold rounded-lg transition-colors shadow-md mb-3"
-          >
-            SALVAR PONTUAÇÃO
-          </button>
         </div>
       </div>
     );
@@ -327,15 +272,14 @@ export default function App() {
               <thead>
                 <tr className="bg-blue-100">
                   <th className="p-2 text-left">Posição</th>
-                  <th className="p-2 text-left">Nome</th>
                   <th className="p-2 text-right">Pontos</th>
                 </tr>
               </thead>
               <tbody>
-                { lideranca.map((jogador, indice) => (
+                { lideranca.map((pontos, indice) => (
                   <tr
                     key={ indice }
-                    className={ `${jogador.nome === nomeJogador ? 'bg-yellow-50' : indice % 2 === 0 ? 'bg-gray-50' : ''}` }
+                    className={ indice % 2 === 0 ? 'bg-gray-50' : '' }
                   >
                     <td className="p-3">
                       { indice === 0 ? (
@@ -344,8 +288,7 @@ export default function App() {
                         `${indice + 1}º`
                       ) }
                     </td>
-                    <td className="p-3 font-medium">{ jogador.nome }</td>
-                    <td className="p-3 text-right font-bold">{ jogador.pontos }</td>
+                    <td className="p-3 text-right font-bold">{ pontos }</td>
                   </tr>
                 )) }
               </tbody>
