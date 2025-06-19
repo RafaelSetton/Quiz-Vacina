@@ -122,7 +122,7 @@ export default function App() {
   // Tela de início
   if (etapaAtual === 'inicio') {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-blue-50 p-4">
+      <div className="flex flex-col items-center justify-center flex-1 bg-blue-50 p-4">
         <div className="w-full max-w-lg bg-white rounded-xl shadow-lg p-6 text-center">
           <h1 className="text-3xl font-bold text-blue-600 mb-6">Quiz da Vacinação</h1>
 
@@ -168,7 +168,7 @@ export default function App() {
     const pergunta = perguntas[perguntaAtual];
 
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-blue-50 p-4">
+      <div className="flex flex-col items-center justify-center flex-1 bg-blue-50 p-4">
         <div className="w-full max-w-lg bg-white rounded-xl shadow-lg p-6">
           <div className="flex justify-between items-center mb-4">
             <div className="bg-blue-100 px-4 py-2 rounded-lg">
@@ -238,7 +238,7 @@ export default function App() {
   // Tela final
   if (etapaAtual === 'final') {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-blue-50 p-4">
+      <div className="flex flex-col items-center justify-center flex-1 bg-blue-50 p-4">
         <div className="w-full max-w-lg bg-white rounded-xl shadow-lg p-6 text-center">
           <h1 className="text-2xl font-bold text-blue-600 mb-4">Quiz Concluído!</h1>
 
@@ -263,7 +263,7 @@ export default function App() {
   // Tela de liderança
   if (etapaAtual === 'lideranca') {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-blue-50 p-4">
+      <div className="flex flex-col items-center justify-center flex-1 bg-blue-50 p-4">
         <div className="w-full max-w-lg bg-white rounded-xl shadow-lg p-6">
           <h1 className="text-2xl font-bold text-blue-600 mb-6 text-center">Top Vacinadores!</h1>
 
