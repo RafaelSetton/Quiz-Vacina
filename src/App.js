@@ -3,7 +3,7 @@ import './App.css';
 import perguntas from './data/questions.json'
 import mascote from './images/mascote.png'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Trophy, Heart, Award, Star } from 'lucide-react';
 
 const images = require.context('./images/questions', true);
@@ -11,7 +11,6 @@ const imageList = images.keys().map(image => images(image));
 
 const TEMPO_POR_QUESTAO = 30
 
-console.log(imageList)
 // Componente principal do Quiz
 export default function App() {
   // Estados para controlar o quiz
@@ -24,6 +23,47 @@ export default function App() {
   const [cronometroAtivo, setCronometroAtivo] = useState(false);
   const [teclaAtiva, setTeclaAtiva] = useState('');
   const [lideranca, setLideranca] = useState([]);
+
+  // Salvar pontuação
+  const salvarPontuacao = useCallback(() => {
+    const novaLideranca = [...lideranca, pontuacao].sort((a, b) => b - a).slice(0, 5);
+
+    setLideranca(novaLideranca);
+    setEtapaAtual('lideranca');
+  }, [lideranca, pontuacao]);
+
+  // Passar para a próxima pergunta
+  const proximaPergunta = useCallback(() => {
+    setMostrarFeedback(false);
+    setTeclaAtiva('');
+
+    if (perguntaAtual < perguntas.length - 1) {
+      setPerguntaAtual(perguntaAtual + 1);
+      setTempoRestante(TEMPO_POR_QUESTAO);
+      setCronometroAtivo(true);
+    } else {
+      setEtapaAtual('final');
+      setTimeout(salvarPontuacao, 3000)
+    }
+  }, [perguntaAtual, salvarPontuacao]);
+
+  // Lidar com resposta selecionada
+  const handleResposta = useCallback((indiceResposta) => {
+    setCronometroAtivo(false);
+
+    const pergunta = perguntas[perguntaAtual];
+
+    if (indiceResposta === -1) {
+      setMensagemFeedback("Tempo esgotado! Vamos para a próxima pergunta.");
+    } else if (indiceResposta === pergunta.respostaCorreta) {
+      setPontuacao(pontuacao + 20);
+      setMensagemFeedback(`Correto! ${pergunta.explicacao}`);
+    } else {
+      setMensagemFeedback(`Ops! A resposta correta era: ${pergunta.opcoes[pergunta.respostaCorreta]}.\n${pergunta.explicacao}`);
+    }
+
+    setMostrarFeedback(true);
+  }, [pontuacao, perguntaAtual]);
 
   // Efeito para controlar o cronômetro
   useEffect(() => {
@@ -38,31 +78,32 @@ export default function App() {
     }
 
     return () => clearInterval(intervalo);
-  }, [cronometroAtivo, tempoRestante]);
+  }, [cronometroAtivo, tempoRestante, handleResposta]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      console.log("Pressed " + event.key + " at " + etapaAtual)
-      console.log(event)
-      if (event.type !== "keydown") return;
+      const KEYS = "abcd";
+      console.log("Pressionou " + event.key + " durante " + etapaAtual)
+      if (event.type !== "keydown" || KEYS.indexOf(event.key.toLowerCase()) === -1) return;
       if (etapaAtual === "inicio") {
         iniciarQuiz()
       } else if (etapaAtual === "quiz" && !mostrarFeedback) {
-        const KEYS = "abcd";
         const idx = KEYS.indexOf(event.key.toLowerCase());
         if (idx >= 0) {
           setTeclaAtiva(event.key.toUpperCase())
           handleResposta(idx);
-          setTimeout(() => { setTeclaAtiva('') }, 2000)
         }
-      } else if (etapaAtual === "lideranca") {
+      } else if (etapaAtual === "quiz" && mostrarFeedback) {
+        proximaPergunta()
+      }
+      else if (etapaAtual === "lideranca") {
         if (event.type === "keydown") reiniciarQuiz()
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [etapaAtual, perguntaAtual, mostrarFeedback]);
+  }, [etapaAtual, perguntaAtual, mostrarFeedback, proximaPergunta, handleResposta]);
 
   // Iniciar o quiz
   const iniciarQuiz = () => {
@@ -73,44 +114,8 @@ export default function App() {
     setCronometroAtivo(true);
   };
 
-  // Salvar pontuação
-  const salvarPontuacao = () => {
-    const novaLideranca = [...lideranca, pontuacao].sort((a, b) => b - a).slice(0, 5);
 
-    setLideranca(novaLideranca);
-    setEtapaAtual('lideranca');
-  };
 
-  // Lidar com resposta selecionada
-  function handleResposta(indiceResposta) {
-    setCronometroAtivo(false);
-
-    const pergunta = perguntas[perguntaAtual];
-
-    if (indiceResposta === -1) {
-      setMensagemFeedback("Tempo esgotado! Vamos para a próxima pergunta.");
-    } else if (indiceResposta === pergunta.respostaCorreta) {
-      setPontuacao(pontuacao + 20);
-      setMensagemFeedback(`Correto!`);
-    } else {
-      setMensagemFeedback(`Ops! A resposta correta era: ${pergunta.opcoes[pergunta.respostaCorreta]}.`);
-    }
-
-    setMostrarFeedback(true);
-
-    setTimeout(() => {
-      setMostrarFeedback(false);
-
-      if (perguntaAtual < perguntas.length - 1) {
-        setPerguntaAtual(perguntaAtual + 1);
-        setTempoRestante(TEMPO_POR_QUESTAO);
-        setCronometroAtivo(true);
-      } else {
-        setEtapaAtual('final');
-        setTimeout(salvarPontuacao, 3000)
-      }
-    }, 3000);
-  };
 
   // Resetar o quiz
   function reiniciarQuiz() {
@@ -195,7 +200,11 @@ export default function App() {
           </div>
 
           <div className="bg-yellow-100 p-3 rounded-lg mb-4 text-center">
-            <p>Para responder aperte o botão correspondente <strong>A, B, C, D</strong> no teclado!</p>
+            {
+              mostrarFeedback ?
+                (<p>Aperte qualquer botão <strong>A, B, C, D</strong> para passar para a próxima pergunta!</p>) :
+                (<p>Para responder aperte o botão correspondente <strong>A, B, C, D</strong> para responder!</p>)
+            }
           </div>
 
           <div className="grid grid-cols-1 gap-3 mb-4">
@@ -227,7 +236,7 @@ export default function App() {
 
           { mostrarFeedback && (
             <div className={ `p-4 rounded-lg mb-4 ${mensagemFeedback.startsWith('Correto') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}` }>
-              { mensagemFeedback }
+              { mensagemFeedback.split("\n").map((line) => (<p>{ line }</p>)) }
             </div>
           ) }
         </div>

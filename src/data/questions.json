@@ -7,7 +7,8 @@
             "Varíola",
             "Gripe"
         ],
-        "respostaCorreta": 2
+        "respostaCorreta": 2,
+        "explicacao": "A Gripe e o Sarampo ainda estão presentes na população. A Poliomielite foi erradicada no Brasil, mas não no mundo. A Varíola Humana é a única doença considerada erradicada globalmente"
     },
     {
         "pergunta": "Em que idade um bebê deve começar a receber vacinas?",
@@ -17,7 +18,8 @@
             "Após 1 ano de vida",
             "A partir dos 2 anos"
         ],
-        "respostaCorreta": 0
+        "respostaCorreta": 0,
+        "explicacao": "A vacinação começa ao nascer, com a aplicação da BCG e da primeira dose da Hepatite B, protegendo o bebê desde os primeiros dias de vida."
     },
     {
         "pergunta": "Por que vacinar contra a COVID-19?",
@@ -27,7 +29,8 @@
             "Não faz diferença para crianças",
             "Para reduzir o risco de ficar gravemente doente"
         ],
-        "respostaCorreta": 3
+        "respostaCorreta": 3,
+        "explicacao": "A vacina contra a COVID-19 reduz o risco de desenvolver formas graves da doença e de hospitalização, protegendo tanto o indivíduo quanto a coletividade."
     },
     {
         "pergunta": "Por que é importante completar as doses de reforço das vacinas?",
@@ -37,7 +40,8 @@
             "Para manter a proteção contra a doença",
             "Para nunca mais ficar doente"
         ],
-        "respostaCorreta": 2
+        "respostaCorreta": 2,
+        "explicacao": "As doses de reforço são essenciais para manter a eficácia da vacina e garantir uma proteção contínua ao longo do tempo."
     },
     {
         "pergunta": "Qual médico britânico é considerado o principal pioneiro da vacinação?",
@@ -47,7 +51,8 @@
             "Joseph Lister",
             "William Harvey"
         ],
-        "respostaCorreta": 0
+        "respostaCorreta": 0,
+        "explicacao": "Edward Jenner é considerado o pai da vacinação por desenvolver a primeira vacina contra a varíola no final do século XVIII."
     },
     {
         "pergunta": "Como a vacinação e o transtorno do espectro autista (TEA) estão relacionados?",
@@ -57,7 +62,8 @@
             "A vacinação é pouco eficaz em pessoas no espectro autista",
             "Existem vacinas que previnem a ocorrência do TEA"
         ],
-        "respostaCorreta": 1
+        "respostaCorreta": 1,
+        "explicacao": "Estudos científicos comprovaram que não existe relação entre vacinas e o transtorno do espectro autista. A associação é um mito já desmentido."
     },
     {
         "pergunta": "Para que serve o cartão (caderneta) de vacinação?",
@@ -67,7 +73,8 @@
             "Contar piadas",
             "Registrar todas as vacinas que a criança tomou"
         ],
-        "respostaCorreta": 3
+        "respostaCorreta": 3,
+        "explicacao": "O cartão de vacinação serve para registrar todas as vacinas aplicadas, facilitando o controle do calendário vacinal da criança."
     },
     {
         "pergunta": "Vacinar-se ajuda apenas a proteger quem toma a vacina?",
@@ -77,7 +84,8 @@
             "Não, também ajuda a proteger outras pessoas da comunidade",
             "Só protege por um dia"
         ],
-        "respostaCorreta": 2
+        "respostaCorreta": 2,
+        "explicacao": "Ao se vacinar, além de se proteger, a pessoa contribui para a chamada imunidade coletiva, ajudando a proteger quem não pode se vacinar."
     },
     {
         "pergunta": "Por que muitas pessoas tomam a vacina da gripe todo ano?",
@@ -87,7 +95,8 @@
             "Não existe vacina da gripe anual",
             "Apenas porque gostam de ser perfuradas"
         ],
-        "respostaCorreta": 1
+        "respostaCorreta": 1,
+        "explicacao": "O vírus da gripe sofre mutações frequentes, por isso a vacina é atualizada e aplicada anualmente para manter a eficácia da proteção."
     },
     {
         "pergunta": "Como as vacinas ajudam o nosso corpo?",
@@ -97,6 +106,7 @@
             "Proporcionando vitaminas",
             "Fazendo o corpo crescer de tamanho"
         ],
-        "respostaCorreta": 0
+        "respostaCorreta": 0,
+        "explicacao": "As vacinas ensinam o sistema imunológico a reconhecer e combater agentes infecciosos, prevenindo doenças antes que elas ocorram."
     }
 ]
